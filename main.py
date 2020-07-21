@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 
-bot = telebot.TeleBot('1160872858:AAFO_2NxeC7w0v6Rq_m6B8K1wN5DA_4grw4')
+bot = telebot.TeleBot('TOKEN')
 
 def get_urls_from_url(url):
 
