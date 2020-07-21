@@ -7,9 +7,6 @@ from handlers import *
 from telebot import types
 bot = telebot.TeleBot('TOKEN')
 
-def function( message ):
-	bot.send_message( message.chat.id , "Hello" )
-
 @bot.message_handler(commands=['start'])
 def start_message(message):
 	bot.send_message( message.from_user.id , 'Привет я бот , я умею разные приколюшки' )
