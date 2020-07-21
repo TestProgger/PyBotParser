@@ -10,15 +10,9 @@ bot = telebot.TeleBot('TOKEN')
 def function( message ):
 	bot.send_message( message.chat.id , "Hello" )
 
-<<<<<<< HEAD
 @bot.message_handler(commands=['start'])
 def start_message(message):
 	bot.send_message( message.from_user.id , 'Привет я бот , я умею разные приколюшки' )
-=======
-bot = telebot.TeleBot('TOKEN')
-
-def get_urls_from_url(url):
->>>>>>> d1a183a631f74cf79e7e785189794e0c71f57d8e
 
 	keyboard = types.InlineKeyboardMarkup()
 
