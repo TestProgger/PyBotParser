@@ -27,7 +27,6 @@ def zip_dir(zipname, dir_to_zip):
 #   @param url [ Валидная ссылка на сайт ]
 #   @return filename [ Название файла со всеми ссылками которые удалось спарсить ]
 # /
-
 def get_urls_from_url(url):
 
     try:
@@ -57,7 +56,6 @@ def get_urls_from_url(url):
 #   @param chat_id [ id чата для которого парсятся картинки ]
 #   @return zipname [ Название архива в котором сод-ся все картинки с сайта ]
 # /
-
 def get_images_from_url(url , chat_id):
     try:
         response = requests.get(url)
@@ -85,7 +83,11 @@ def get_images_from_url(url , chat_id):
 
     return False
 
-
+#/
+#   @param message [ Объект message содержащий все о сообщении и чате с пользоваателем ]
+#   @param bot [ Объект класса Telebot ]
+#   @param mode [ Режим на котором будет работать пасер { parse_url , parse_images } ]
+#/
 def universal_parser( message , bot  , mode ):
     url_to_parse = message.text
     if validators.url( url_to_parse ):
