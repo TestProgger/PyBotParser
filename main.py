@@ -6,6 +6,11 @@ from handlers import *
 from telebot import types
 bot = telebot.TeleBot('TOKEN')
 
+bot_commands = [
+				'/parse - вызов  парсера',
+				'/image - обработчик изображения'
+]
+
 @bot.message_handler(commands=['start'])
 def start_message(message):
 	bot.send_message( message.from_user.id , 'Привет я бот , я умею разные приколюшки' )
@@ -33,36 +38,10 @@ def callback_worker( call ):
 
 	
 def parse_urls(  message ):
-	url_to_parse = message.text
-	if validators.url( url_to_parse ):
-		parsed_urls = get_urls_from_url(url_to_parse)
-		if parsed_urls:
-			bot.send_message(message.chat.id ,'Почти готово .....')
-			with open(parsed_urls , 'rb') as file:
-				bot.send_document(message.chat.id , file)
-			os.remove(parsed_urls)
-		else:
-			bot.send_message( message.chat.id , 'Не получилось, не фортануло' )
-			bot.send_message( message.chat.id , 'Нет доступа к ресурсу , либо ресурс не существует' )
-	else:
-		bot.send_message( message.chat.id , 'Не валидный формат ссылки ....' )
+	universal_parser(message , bot  , 'parse_urls')
 
 def parse_images(  message ):
-	bot.send_message( message.chat.id, 'Придется подождать .....')
-	url_to_parse = message.text
-	if validators.url( url_to_parse ):
-		parsed_images = get_images_from_url(url_to_parse ,message.chat.id )
-		if parsed_images:
-			bot.send_message(message.chat.id ,'Почти готово .....')
-			with open(parsed_images , 'rb') as file:
-				bot.send_document(message.chat.id , file)
-			os.remove(parsed_images)
-			
-		else:
-			bot.send_message( message.chat.id , 'Не получилось, не фортануло' )
-			bot.send_message( message.chat.id , 'Нет доступа к ресурсу , либо ресурс не существует' )
-	else:
-		bot.send_message( message.chat.id , 'Не валидный формат ссылки ....' )
+	universal_parser(message , bot , 'parse_images')
 
 
 bot.polling()

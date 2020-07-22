@@ -7,6 +7,8 @@ import zipfile
 import os
 import shutil
 
+import validators
+
 # / 
 #   @param zipname [ Название архива ]
 #   @param dir_to_zip [ Название директории для архивации ]
@@ -82,3 +84,24 @@ def get_images_from_url(url , chat_id):
         return zipname
 
     return False
+
+
+def universal_parser( message , bot  , mode ):
+    url_to_parse = message.text
+    if validators.url( url_to_parse ):
+        bot.send_message( message.chat.id , 'Придется подождать ......' )  
+        
+        if mode == 'parse_urls':
+            parsed_urls = get_urls_from_url(url_to_parse)
+        else:
+            parsed_urls = get_images_from_url(url_to_parse , message.chat.id)
+
+        if parsed_urls:
+            bot.send_message(message.chat.id ,'Почти готово .....')
+            with open(parsed_urls , 'rb') as file:
+                bot.send_document(message.chat.id , file)
+            os.remove(parsed_urls)
+        else:
+        	bot.send_message( message.chat.id , 'Не получилось, не фортануло' )
+    else:
+        bot.send_message( message.chat.id , 'Не валидный формат ссылки ....' )
