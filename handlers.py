@@ -5,7 +5,13 @@ from time import strftime
 
 import zipfile 
 import os
+import shutil
 
+# / 
+#   @param zipname [ Название архива ]
+#   @param dir_to_zip [ Название директории для архивации ]
+#   @return None
+# /
 def zip_dir(zipname, dir_to_zip):
     dir_to_zip_len = len(dir_to_zip.rstrip(os.sep)) + 1
     with zipfile.ZipFile(zipname, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
@@ -14,6 +20,11 @@ def zip_dir(zipname, dir_to_zip):
                 path = os.path.join(dirname, filename)
                 entry = path[dir_to_zip_len:]
                 zf.write(path, entry)
+
+# / 
+#   @param url [ Валидная ссылка на сайт ]
+#   @return filename [ Название файла со всеми ссылками которые удалось спарсить ]
+# /
 
 def get_urls_from_url(url):
 
@@ -39,6 +50,11 @@ def get_urls_from_url(url):
 
     return False
 
+# / 
+#   @param url [ Валидная ссылка на сайт ]
+#   @param chat_id [ id чата для которого парсятся картинки ]
+#   @return zipname [ Название архива в котором сод-ся все картинки с сайта ]
+# /
 
 def get_images_from_url(url , chat_id):
     try:
@@ -62,6 +78,7 @@ def get_images_from_url(url , chat_id):
         zipname = strftime('images_%Y_%m_%d_%H_%M') + '.zip'
 
         zip_dir(zipname , dirname)
+        shutil.rmtree(f'photos_{chat_id}')
         return zipname
 
     return False

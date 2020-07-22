@@ -1,6 +1,5 @@
 import telebot
 import validators
-import shutil
 import os
 from handlers import *
 
@@ -57,7 +56,6 @@ def parse_images(  message ):
 			bot.send_message(message.chat.id ,'Почти готово .....')
 			with open(parsed_images , 'rb') as file:
 				bot.send_document(message.chat.id , file)
-			shutil.rmtree(f'photos_{message.chat.id}')
 			os.remove(parsed_images)
 			
 		else:
